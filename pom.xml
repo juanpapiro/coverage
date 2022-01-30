@@ -9,17 +9,16 @@
 	<modules>
 		<module>modulo1</module>
 		<module>modulo2</module>
-		<module>tests</module>
+		<module>modulocoverage</module>
 	</modules>
 
 	<properties>
 		<jacoco.version>0.8.3</jacoco.version>
 		<maven.surefire.version>3.0.0-M5</maven.surefire.version>
-		<!--<agregate.report.dir>target/site/jacoco-agregate</agregate.report.dir>-->
 		
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 	    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-	    <sonar.jacoco.reportPath>${project.basedir}/../target/site/jacoco-agregate/jacoco.xlm</sonar.jacoco.reportPath>
+	    <sonar.jacoco.reportPath>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.reportPath>
 	    <sonar.language>java</sonar.language>
 	</properties>
 
@@ -72,79 +71,55 @@
 				<version>${jacoco.version}</version>
 				<executions>
 					<execution>
-						<id>prepare-and-report</id>
+						<id>prepare</id>
 						<goals>
 							<goal>prepare-agent</goal>
-							<goal>report</goal>
 						</goals>
 					</execution>
 					<execution>
+						<id>report</id>
+						<goals>
+							<goal>report</goal>	
+						</goals>
+					</execution>			
+					<execution>
 						<id>report-aggregate</id>
-						<phase>verify</phase>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>report-aggregate</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.basedir}/../target/site/jacoco-aggregate</outputDirectory>
+							<outputDirectory>${sonar.jacoco.reportPath}</outputDirectory>
 						</configuration>
-					</execution>
+					</execution>	
 				</executions>
 			</plugin>
+			
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven.surefire.version}</version>
-				<configuration>
-					<reportsDirectory>${basedir}/../target/surefire-reports</reportsDirectory>
-				</configuration>
-			</plugin>
-			
-			<!--
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
 				<executions>
+					<!-- adiciona o diretório de surefire-reports com todos os testes no módulo pai -->
 					<execution>
-						<id>default-prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>default-report</id>
-						<goals>
-							<goal>report</goal>
-						</goals>
+					<phase>prepare-package</phase>
+					<goals>
+						<goal>test</goal>
+					</goals>
+					<configuration>
+						<!-- especifica diretório de surefire-reports no módulo pai -->
+						<reportsDirectory>${basedir}/../target/surefire-reports</reportsDirectory>
+					</configuration>
+					
 					</execution>
 				</executions>
 			</plugin>
-			-->
-
+			
+			
 		</plugins>
-		
-
 		
 	</build>
 
-	<!--
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${jacoco.version}</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
-	-->
 
 </project>
