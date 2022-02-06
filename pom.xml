@@ -18,8 +18,9 @@
 		
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 	    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-	    <sonar.jacoco.reportPath>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.reportPath>
+	    <sonar.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.xmlReportPaths>
 	    <sonar.language>java</sonar.language>
+	    <jacoco.reportPath>${project.basedir}/../modulo1/target/site/jacoco-aggregate/</jacoco.reportPath>
 	</properties>
 
 	<dependencies>
@@ -89,7 +90,7 @@
 							<goal>report-aggregate</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${sonar.jacoco.reportPath}</outputDirectory>
+							<outputDirectory>${jacoco.reportPath}</outputDirectory>
 						</configuration>
 					</execution>	
 				</executions>

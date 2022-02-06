@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
-import br.com.modulo1.models.Product;
+import br.com.modulo2.models.Product;
 
 public class ControllerTest {
 	

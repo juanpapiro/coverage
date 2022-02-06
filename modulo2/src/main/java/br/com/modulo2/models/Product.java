@@ -1,4 +1,4 @@
-package br.com.modulo1.models;
+package br.com.modulo2.models;
 
 public class Product {
 	
